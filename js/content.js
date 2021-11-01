@@ -1964,7 +1964,7 @@ let observer = new MutationObserver(function (mutations) {
     NodeFilter.SHOW_ALL,
     { 
         acceptNode: function (node) {
-            if(node.nodeType === 3 || node.hasAttribute('data-label')) {
+            if(typeof node === 'object'|| node.nodeType === 3 || node.hasAttribute('data-label')) {
                 return NodeFilter.FILTER_ACCEPT;
             }else {
                 return NodeFilter.FILTER_SKIP;
@@ -1985,8 +1985,10 @@ let observer = new MutationObserver(function (mutations) {
         let key1 = currentNode.textContent;
         if (dataMap.has(key1)) currentNode.textContent = dataMap.get(key1);
     }else {
+      if(currentNode.hasOwnProperty('data-label')){
         let key2 = currentNode.getAttribute('data-label');
         if (dataMap.has(key2)) currentNode.setAttribute('data-label', dataMap.get(key2));
+      }
     }
 
     currentNode = treeWalker.nextNode();
